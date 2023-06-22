@@ -1,0 +1,44 @@
+<html>
+  <body>
+    <h1>더하기</h1>
+    1+1 <br />
+    <script>
+      document.write(1 + 1);
+    </script>
+    <h1>시간</h1>
+    2022년 6월 22일 10시 30분 34초 <br />
+    <script>
+      function getCurrentTime() {
+        let now = new Date();
+        let year = now.getFullYear();
+        let month = now.getMonth() + 1; // Javascript의 월은 0부터 시작합니다.
+        let day = now.getDate();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        let seconds = now.getSeconds();
+
+        // 만약 일, 시간, 분, 초가 10 미만인 경우에 '0'을 붙여 두 자릿수로 만듭니다.
+        day = day < 10 ? "0" + day : day;
+        hours = hours < 10 ? "0" + hours : hours;
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        let time =
+          year +
+          "년 " +
+          month +
+          "월 " +
+          day +
+          "일 " +
+          hours +
+          "시 " +
+          minutes +
+          "분 " +
+          seconds +
+          "초";
+        return time;
+      }
+      document.write(getCurrentTime());
+    </script>
+  </body>
+</html>
