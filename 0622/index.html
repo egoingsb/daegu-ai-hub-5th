@@ -21,20 +21,23 @@
     </style>
   </head>
   <body>
+    <script>
+      const bodyTag = document.querySelector("body");
+    </script>
     <input
       type="button"
       value="black"
       onclick="
-        document.querySelector('body').style.backgroundColor = 'black';
-        document.querySelector('body').style.color = 'white';
+        bodyTag.style.backgroundColor = 'black';
+        bodyTag.style.color = 'white';
     "
     />
     <input
       type="button"
       value="white"
       onclick="
-        document.querySelector('body').style.backgroundColor = 'white';
-        document.querySelector('body').style.color = 'black';
+        bodyTag.style.backgroundColor = 'white';
+        bodyTag.style.color = 'black';
     "
     />
     <h1><a href="index.html">WEB</a></h1>
