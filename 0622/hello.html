@@ -1,11 +1,10 @@
 <html>
   <body>
-    <h1>더하기</h1>
+    <h1>Script 태그</h1>
     1+1 <br />
     <script>
       document.write(1 + 1);
     </script>
-    <h1>시간</h1>
     2022년 6월 22일 10시 30분 34초 <br />
     <script>
       function getCurrentTime() {
@@ -40,5 +39,8 @@
       }
       document.write(getCurrentTime());
     </script>
+    <h1>이벤트</h1>
+    <input type="button" value="안녕" onclick="alert('안녕!')" />
+    <input type="button" value="시간" onclick="alert(getCurrentTime())" />
   </body>
 </html>
