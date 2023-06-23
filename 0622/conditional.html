@@ -29,9 +29,38 @@
         <input type="button" value="로그인" onclick="
             const password = '123';
             const inputPassword = prompt('비밀번호를 입력하세요.');
-            console.log(inputPassword);
             if(inputPassword === password){
                 alert('안녕하세요!');
+            }
+        ">
+        <h1>else</h1>
+        <script>
+            console.log(1);
+            if(true){
+                console.log(2);
+            } else {
+                console.log(3);
+            }
+            console.log(4);
+
+            console.log(1);
+            if(false){
+                console.log(2);
+            } else {
+                console.log(3);
+            }
+            console.log(4);
+        </script>
+        <h1>Example</h1>
+        <input type="button" value="로그인" onclick="
+            const password2 = '123';
+            const inputPassword2 = prompt('비밀번호를 입력하세요.');
+            if(inputPassword2 === password2){
+                alert('안녕하세요!');
+                speechSynthesis.speak(new SpeechSynthesisUtterance('안녕하세요'))
+            } else {
+                alert('뉘슈?');
+                speechSynthesis.speak(new SpeechSynthesisUtterance('뉘신지?'))
             }
         ">
     </body>
