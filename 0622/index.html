@@ -24,22 +24,25 @@
     <script>
       const bodyTag = document.querySelector("body");
     </script>
+    
     <input
       type="button"
       value="black"
       onclick="
-        bodyTag.style.backgroundColor = 'black';
-        bodyTag.style.color = 'white';
+        // 만약 이 버튼의 value가 black이라면?
+        if(this.value === 'black'){
+          bodyTag.style.backgroundColor = 'black';
+          bodyTag.style.color = 'white';
+          this.value = 'white';
+        } else { 
+        // 아니라면?
+          bodyTag.style.backgroundColor = 'white';
+          bodyTag.style.color = 'black';
+          this.value = 'black';
+        }
     "
     />
-    <input
-      type="button"
-      value="white"
-      onclick="
-        bodyTag.style.backgroundColor = 'white';
-        bodyTag.style.color = 'black';
-    "
-    />
+
     <h1><a href="index.html">WEB</a></h1>
     <div id="container">
       <ul>
