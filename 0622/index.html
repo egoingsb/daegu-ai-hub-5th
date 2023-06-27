@@ -19,37 +19,43 @@
         border-right: 5px solid gray;
       }
     </style>
+    <script>
+      function getRandomColor(brightness) {
+          function randomChannel(brightness) {
+              var r = Math.random() * 256;
+              if (brightness === 1) {
+                  return Math.round((r + 255) / 2); // bright color
+              }
+              return Math.round((r / 2)); // dark color
+          }
+
+          var r = randomChannel(brightness);
+          var g = randomChannel(brightness);
+          var b = randomChannel(brightness);
+
+          return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+      }
+    </script>
   </head>
   <body>
-    <script>
-      const bodyTag = document.querySelector("body");
-    </script>
-    
     <input
       type="button"
       value="black"
       onclick="
-        const links = document.querySelectorAll('a')
-        // 만약 이 버튼의 value가 black이라면?
         if(this.value === 'black'){
-          bodyTag.style.backgroundColor = 'black';
-          bodyTag.style.color = 'white';
-          for(let i=0; i<links.length; i++){
-            links[i].style.color = 'white';
-          } 
+          document.querySelector('body').style.backgroundColor = getRandomColor(0);
+          document.querySelector('body').style.color = getRandomColor(1);
           this.value = 'white';
         } else { 
-        // 아니라면?
-          bodyTag.style.backgroundColor = 'white';
-          bodyTag.style.color = 'black';
-          for(let i=0; i<links.length; i++){
-            links[i].style.color = 'black';
-          }
+          document.querySelector('body').style.backgroundColor = getRandomColor(1);
+          document.querySelector('body').style.color = getRandomColor(0);
           this.value = 'black';
         }
-    "
-    />
-
+    " />
+    <input type="button" value="random" onclick="
+      document.querySelector('body').style.backgroundColor = getRandomColor(0);
+      document.querySelector('body').style.color = getRandomColor(1);
+    ">
     <h1><a href="index.html">WEB</a></h1>
     <div id="container">
       <ul>
