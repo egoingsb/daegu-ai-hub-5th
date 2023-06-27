@@ -77,9 +77,79 @@
       </ul>
       <div>
         <h2>Welcome</h2>
-        <a href="http://info.cern.ch">WWW</a> is
-        <strong>World <u>Wide</u> WEB</strong>.
+        <div id="content">
+          <a href="http://info.cern.ch">WWW</a> is
+          <strong>World <u>Wide</u> WEB</strong>.
+        </div>
       </div>
+      <script>
+        const OPENAI_API_KEY = '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';  // 여기에 OpenAI API Key를 입력하세요
+        const content = document.querySelector('#content').innerText;
+        const url = 'https://api.openai.com/v1/chat/completions';
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${OPENAI_API_KEY}`
+        };
+        let bodyMessage;
+      </script>
+      <p><input type="button" value="뻥튀기" onclick="
+        bodyMessage = JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [
+                {role: 'system', content: 'You are a helpful assistant.'},
+                {role: 'user', content: '다음 텍스트를 더 길게 늘려줘.'+content}
+            ]
+        });
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: bodyMessage
+        })
+        .then(function(resp){return resp.json();})
+        .then(function(result){
+            document.querySelector('#content').innerHTML = result.choices[0].message.content;
+        })
+      "></p>
+
+      <p><input type="button" value="줄이기" onclick="
+        bodyMessage = JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [
+                {role: 'system', content: 'You are a helpful assistant.'},
+                {role: 'user', content: '다음 텍스트를 요약해줘.'+content}
+            ]
+        });
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: bodyMessage
+        })
+        .then(function(resp){return resp.json();})
+        .then(function(result){
+            document.querySelector('#content').innerHTML = result.choices[0].message.content;
+        })
+      "></p>
+
+      <p><input type="button" value="아무말 대잔치" onclick="
+        bodyMessage = JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            temperature: 0.8,
+            messages: [
+                {role: 'system', content: 'You are a helpful assistant.'},
+                {role: 'user', content: '다음 텍스트를 이용해서 아무말 대잔치를 해줘. 웃기면 더 좋아.'+content}
+            ]
+        });
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: bodyMessage
+        })
+        .then(function(resp){return resp.json();})
+        .then(function(result){
+            document.querySelector('#content').innerHTML = result.choices[0].message.content;
+        })
+      "></p>
+      
     </div>
   </body>
 </html>
