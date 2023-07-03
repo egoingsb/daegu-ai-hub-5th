@@ -77,16 +77,51 @@
 
             newTable.appendChild(newRow);
         }
+
+        function sortTable(columnIndex) {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("original-table");
+            switching = true;
+
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+
+                    x = rows[i].getElementsByTagName("td")[columnIndex];
+                    y = rows[i + 1].getElementsByTagName("td")[columnIndex];
+
+                    if (isNaN(x.innerHTML)) {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else {
+                        if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
     </script>
 </head>
 
 <body>
     <table id="original-table">
         <tr>
-            <th>날짜</th>
-            <th>내역</th>
-            <th>지출</th>
-            <th>수입</th>
+            <th onclick="sortTable(0)">날짜</th>
+            <th onclick="sortTable(1)">내역</th>
+            <th onclick="sortTable(2)">지출</th>
+            <th onclick="sortTable(3)">수입</th>
         </tr>
         <tr>
             <td class="center">7-1</td>
