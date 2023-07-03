@@ -1,60 +1,140 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <style>
-            table {
-              border-collapse: collapse;
+
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        td.center {
+            text-align: center;
+        }
+
+        td.left {
+            text-align: left;
+        }
+
+        td.right {
+            text-align: right;
+        }
+
+        table {
+            width: 400px;
+        }
+
+        td,
+        th {
+            width: 100px;
+        }
+    </style>
+    <script>
+        function sum() {
+            // 이전 표에서 데이터 추출
+            const originalTable = document.getElementById("original-table");
+            const rows = originalTable.getElementsByTagName("tr");
+
+            let sumExpenses = 0;
+            let sumIncome = 0;
+
+            // 첫 번째 행은 헤더이므로 제외하고 계산
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                const expenses = parseInt(cells[2].textContent);
+                const income = parseInt(cells[3].textContent);
+
+                sumExpenses += expenses;
+                sumIncome += income;
             }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-            }
-          </style>
-    </head>
-    <body>
-        <table>
-            <tr>
-              <th>날짜</th>
-              <th>내역</th>
-              <th>지출</th>
-              <th>수입</th>
-            </tr>
-            <tr>
-              <td>7-1</td>
-              <td>야식</td>
-              <td>25000</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>7-1</td>
-              <td>스벅커피</td>
-              <td>5500</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>7-1</td>
-              <td>당근판매</td>
-              <td>0</td>
-              <td>20000</td>
-            </tr>
-            <tr>
-              <td>7-1</td>
-              <td>식사</td>
-              <td>10000</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>7-2</td>
-              <td>영화</td>
-              <td>15000</td>
-              <td>0</td>
-            </tr>
-            <tr>
-              <td>7-2</td>
-              <td>용돈</td>
-              <td>0</td>
-              <td>30000</td>
-            </tr>
-          </table>          
-    </body>
+
+            // 새로운 표에 동적으로 계산된 내용 추가
+            const newTable = document.getElementById("new-table");
+            const newRow = document.createElement("tr");
+
+            // 공백 컬럼
+            const emptyCell1 = document.createElement("td");
+            const emptyCell2 = document.createElement("td");
+            newRow.appendChild(emptyCell1);
+            newRow.appendChild(emptyCell2);
+
+            // 합계 표시
+            const sumExpensesCell = document.createElement("td");
+            sumExpensesCell.textContent = sumExpenses;
+            const sumIncomeCell = document.createElement("td");
+            sumIncomeCell.textContent = sumIncome;
+            newRow.appendChild(sumExpensesCell);
+            newRow.appendChild(sumIncomeCell);
+
+            newTable.appendChild(newRow);
+        }
+    </script>
+</head>
+
+<body>
+    <table id="original-table">
+        <tr>
+            <th>날짜</th>
+            <th>내역</th>
+            <th>지출</th>
+            <th>수입</th>
+        </tr>
+        <tr>
+            <td class="center">7-1</td>
+            <td class="left">야식</td>
+            <td class="right">25000</td>
+            <td class="right">0</td>
+        </tr>
+        <tr>
+            <td class="center">7-1</td>
+            <td class="left">스벅커피</td>
+            <td class="right">5500</td>
+            <td class="right">0</td>
+        </tr>
+        <tr>
+            <td class="center">7-1</td>
+            <td class="left">당근판매</td>
+            <td class="right">0</td>
+            <td class="right">20000</td>
+        </tr>
+        <tr>
+            <td class="center">7-1</td>
+            <td class="left">식사</td>
+            <td class="right">10000</td>
+            <td class="right">0</td>
+        </tr>
+        <tr>
+            <td class="center">7-2</td>
+            <td class="left">영화</td>
+            <td class="right">15000</td>
+            <td class="right">0</td>
+        </tr>
+        <tr>
+            <td class="center">7-2</td>
+            <td class="left">용돈</td>
+            <td class="right">0</td>
+            <td class="right">30000</td>
+        </tr>
+    </table>
+
+    <table id="new-table">
+        <!-- 동적으로 계산된 내용을 표시할 행들 -->
+    </table>
+
+    <script>
+
+        sum();
+
+    </script>
+</body>
+
 </html>
