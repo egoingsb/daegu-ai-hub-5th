@@ -79,9 +79,10 @@
         }
 
         function sortTable(columnIndex) {
-            var table, rows, switching, i, x, y, shouldSwitch;
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
             table = document.getElementById("original-table");
             switching = true;
+            dir = "asc"; // 기본 정렬 모드 (오름차순)
 
             while (switching) {
                 switching = false;
@@ -93,15 +94,29 @@
                     x = rows[i].getElementsByTagName("td")[columnIndex];
                     y = rows[i + 1].getElementsByTagName("td")[columnIndex];
 
-                    if (isNaN(x.innerHTML)) {
-                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                            shouldSwitch = true;
-                            break;
+                    if (dir === "asc") { // 오름차순 정렬
+                        if (isNaN(x.innerHTML)) {
+                            if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else {
+                            if (Number(x.innerHTML) > Number(y.innerHTML)) {
+                                shouldSwitch = true;
+                                break;
+                            }
                         }
-                    } else {
-                        if (Number(x.innerHTML) > Number(y.innerHTML)) {
-                            shouldSwitch = true;
-                            break;
+                    } else if (dir === "desc") { // 내림차순 정렬
+                        if (isNaN(x.innerHTML)) {
+                            if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                shouldSwitch = true;
+                                break;
+                            }
+                        } else {
+                            if (Number(x.innerHTML) < Number(y.innerHTML)) {
+                                shouldSwitch = true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -109,6 +124,12 @@
                 if (shouldSwitch) {
                     rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
                     switching = true;
+                    switchCount++;
+                } else {
+                    if (switchCount === 0 && dir === "asc") {
+                        dir = "desc"; // 첫 번째 클릭 시 내림차순 모드로 변경
+                        switching = true;
+                    }
                 }
             }
         }
