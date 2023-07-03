@@ -137,6 +137,62 @@
 </head>
 
 <body>
+    <form id="expenseForm">
+        <p>
+            <label for="date">날짜:</label>
+            <input type="text" id="date" name="date" value="7-3">
+        </p>
+        <p>
+            <label for="description">내역:</label>
+            <input type="text" id="description" name="description" value="용돈">
+        </p>
+        <p>
+            <label for="expense">지출:</label>
+            <input type="number" id="expense" name="expense" value="0">
+        </p>
+        <p>
+            <label for="income">수입:</label>
+            <input type="number" id="income" name="income" value="30000">
+        </p>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+    <script>
+        document.getElementById("expenseForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // 기본 제출 동작 방지
+
+            // 입력된 값을 가져오기
+            const date = document.getElementById("date").value;
+            const description = document.getElementById("description").value;
+            const expense = document.getElementById("expense").value;
+            const income = document.getElementById("income").value;
+
+            // 새로운 행 생성
+            const table = document.getElementById("original-table");
+            const newRow = table.insertRow(-1); // 마지막 위치에 행 추가
+
+            // 셀에 값 채우기
+            const dateCell = newRow.insertCell(0);
+            dateCell.textContent = date;
+
+            const descriptionCell = newRow.insertCell(1);
+            descriptionCell.textContent = description;
+
+            const expenseCell = newRow.insertCell(2);
+            expenseCell.textContent = expense;
+
+            const incomeCell = newRow.insertCell(3);
+            incomeCell.textContent = income;
+
+            // 입력 폼 초기화
+            document.getElementById("date").value = "";
+            document.getElementById("description").value = "";
+            document.getElementById("expense").value = "";
+            document.getElementById("income").value = "";
+        });
+
+    </script>
     <table id="original-table">
         <tr>
             <th onclick="sortTable(0)">날짜</th>
