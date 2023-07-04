@@ -16,6 +16,7 @@ app = gr.Interface(
         gr.Textbox(value="사랑", info="한국어를 입력하세요"),
     ],
     outputs="text",
+    examples=[["ko2en", "사랑"], ["en2ko", "love"]],
 )
 app.launch(debug=True)
 
