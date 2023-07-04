@@ -1,10 +1,12 @@
-# 함수명 : add
-# 파라미터 : left, right
-# 출력 : left+right
+import gradio as gr
+
+
 def add(left, right):
-    return left + right
+    return int(left) + int(right)
 
 
-input1 = int(input("값1 :"))
-input2 = int(input("값2 :"))
-print(add(input1, input2))
+app = gr.Interface(fn=add, inputs=["text", "text"], outputs="text")
+app.launch(debug=True)
+# input1 = int(input("값1 :"))
+# input2 = int(input("값2 :"))
+# print(add(input1, input2))
