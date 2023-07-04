@@ -5,4 +5,6 @@ def add(left, right):
     return left + right
 
 
-print(add(1, 2))
+input1 = int(input("값1 :"))
+input2 = int(input("값2 :"))
+print(add(input1, input2))
