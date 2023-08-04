@@ -1,5 +1,9 @@
 {% extends "common.html" %}
 {% block content %}
   <h2>Create</h2>
-  create!!
+  <form action="/create_process" method="POST">
+    <p><input type="text" name="title" placeholder="제목"></p>
+    <p><textarea name="body" placeholder="본문"></textarea></p>
+    <p><input type="submit" value="create"></p>
+  </form>
 {% endblock %}
