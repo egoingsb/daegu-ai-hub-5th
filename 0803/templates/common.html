@@ -3,7 +3,7 @@
     <h1><a href="/">WEB</a></h1>
     <ol>
       {% for topic in topics %}
-        <li><a href="/read/{{topic.id}}">{{topic.title}}</a></li>
+        <li><a href="/read/{{topic[0]}}">{{topic[1]}}</a></li>
       {% endfor %}
     </ol>
     {% block content %}{% endblock %}

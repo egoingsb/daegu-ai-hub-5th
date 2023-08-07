@@ -1,7 +1,20 @@
 from flask import Flask, render_template, request, redirect
-import random
+import psycopg2
+from pgvector.psycopg2 import register_vector
+import numpy as np
 
 app = Flask(__name__)
+
+conn = psycopg2.connect(
+    database="postgres",
+    user="postgres",
+    password="todghkfzheld",
+    host="db.xnvflqoounhpdkwhsfxo.supabase.co",
+    port="5432",
+)
+cursor = conn.cursor()
+register_vector(cursor)
+
 
 nextId = 4
 topics = [
@@ -12,6 +25,9 @@ topics = [
 
 @app.route("/")
 def index():
+    cursor.execute("SELECT id, title FROM topics")
+    topics = cursor.fetchall()
+    print(topics)
     return render_template('index.html', topics=topics)
 
 @app.route("/create")
