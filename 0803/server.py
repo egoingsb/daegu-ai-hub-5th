@@ -32,14 +32,19 @@ def index():
 
 @app.route("/create")
 def create():
+    cursor.execute("SELECT id, title FROM topics")
+    topics = cursor.fetchall()
     return render_template('create.html', topics=topics)
 
 @app.route("/create_process", methods=['POST'])
 def create_process():
-    global nextId
-    topics.append({"id":nextId, "title":request.form['title'], "body":request.form['body']})
-    nextId = nextId + 1
-    return redirect(f'/read/{nextId-1}')
+    t = request.form['title']
+    b = request.form['body']
+    cursor.execute("INSERT INTO topics (title, body) VALUES(%s,%s) RETURNING id", (t, b))
+    lastid = cursor.fetchone()[0]
+    conn.commit()
+    return redirect(f'/read/{lastid}')
+
 @app.route("/read/<int:id>")
 def read(id):
     cursor.execute("SELECT id, title, body FROM topics")
