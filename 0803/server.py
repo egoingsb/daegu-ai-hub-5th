@@ -5,41 +5,53 @@ import numpy as np
 
 from dotenv import load_dotenv
 load_dotenv()  # take environment variables from .env.
+import os
 
 app = Flask(__name__)
 
-conn = psycopg2.connect(
-    database="postgres",
-    user="postgres",
-    password="todghkfzheld",
-    host="db.xnvflqoounhpdkwhsfxo.supabase.co",
-    port="5432",
-)
-cursor = conn.cursor()
-register_vector(cursor)
+from psycopg2.pool import SimpleConnectionPool
 
+def create_conn_pool():
+    return SimpleConnectionPool(1, 10, 
+                                database="postgres",
+                                user="postgres",
+                                password=os.environ.get('PASSWORD'),
+                                host=os.environ.get('HOST'),
+                                port="5432")
 
-nextId = 4
-topics = [
-    {"id":1, "title":"html", "body":"html is ..."},
-    {"id":2, "title":"css", "body":"css is ..."}, 
-    {"id":3, "title":"js", "body":"js is ..."}
-]
+# Initialize connection pool
+connection_pool = create_conn_pool()
+
+from flask import g
+@app.before_request
+def get_conn():
+    print('before')
+    g.conn = connection_pool.getconn()
+
+@app.teardown_request
+def close_conn(exception):
+    print('teardown')
+    connection_pool.putconn(g.conn)
+
 
 @app.route("/")
 def index():
+    cursor = g.conn.cursor()
     cursor.execute("SELECT id, title FROM topics")
     topics = cursor.fetchall()
     return render_template('index.html', topics=topics)
 
 @app.route("/create")
 def create():
+    cursor = g.conn.cursor()
     cursor.execute("SELECT id, title FROM topics")
     topics = cursor.fetchall()
     return render_template('create.html', topics=topics)
 
 @app.route("/search")
 def search():
+    cursor = g.conn.cursor()
+    register_vector(cursor)
     cursor.execute("SELECT id, title FROM topics")
     topics = cursor.fetchall()
     
@@ -65,6 +77,8 @@ def create_process():
         model="text-embedding-ada-002"
     )
     embeddings = np.array(response['data'][0]['embedding'])
+    cursor = g.conn.cursor()
+    register_vector(cursor)
     cursor.execute("""
         INSERT INTO topics 
             (title, body, embedding) 
@@ -72,11 +86,12 @@ def create_process():
             RETURNING id""", 
         (t, b, embeddings))
     lastid = cursor.fetchone()[0]
-    conn.commit()
+    g.conn.commit()
     return redirect(f'/read/{lastid}')
 
 @app.route("/read/<int:id>")
 def read(id):
+    cursor = g.conn.cursor()
     cursor.execute("SELECT id, title, body FROM topics")
     topics = cursor.fetchall()
     selected = None
