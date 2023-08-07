@@ -1,2 +1,3 @@
 .vscode/settings.json
 0803/__pycache__/server.cpython-311.pyc
+0803/templates/search.html

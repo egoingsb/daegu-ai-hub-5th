@@ -1,0 +1,9 @@
+{% extends "common.html" %}
+{% block content %}
+<h2>검색결과</h2>
+<ol>
+  {% for topic in searched %}
+    <li><a href="/read/{{topic[0]}}">{{topic[1]}}</a></li>
+  {% endfor %}
+</ol>
+{% endblock %}
