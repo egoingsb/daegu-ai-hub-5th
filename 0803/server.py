@@ -42,9 +42,11 @@ def create_process():
     return redirect(f'/read/{nextId-1}')
 @app.route("/read/<int:id>")
 def read(id):
+    cursor.execute("SELECT id, title, body FROM topics")
+    topics = cursor.fetchall()
     selected = None
     for topic in topics:
-        if topic["id"] == id:
+        if topic[0] == id:
             selected = topic
     return render_template('read.html', topics=topics, topic=selected)
 
